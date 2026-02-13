@@ -2,6 +2,24 @@
 
 **Why this matters:** Even a library needs a clean, usable API.
 
+## Before You Start
+
+Answer these readiness questions:
+1. Look at your current VectorStore code. If someone else had to use it, what would confuse them? What's missing?
+2. Have you used a database library in Python (e.g., SQLite, SQLAlchemy, Redis client)? What made its API easy or hard to use?
+3. What happens if a user inserts a 768-dim vector into a store that already has 384-dim vectors? Does your current code handle this?
+4. If a user wanted to store two separate collections (e.g., "products" and "documents") with different dimensions and different index types, how would they do it with your current design?
+
+**#1 and #3** will reveal gaps in your current implementation. **#2** gives you reference points for API design. **#4** motivates the core deliverable: collection management.
+
+## Introduction
+
+You've built distance functions, brute-force search, persistence, and multiple index types. But the code is scattered across modules with inconsistent interfaces. A user would need to know which file to import, how to configure each index, and how to manage multiple vector spaces.
+
+This module is about turning your collection of implementations into a cohesive library. You'll design a `VectorDB` class that manages named collections, each with its own dimension, distance metric, and index backend. You'll add input validation so users get clear errors instead of cryptic NumPy exceptions. You'll add batch insert so users don't pay per-vector overhead.
+
+This isn't glamorous work, but it's what separates a learning exercise from something actually usable. The decisions you make here (naming, defaults, error messages, what to expose vs. hide) are the same decisions library authors face.
+
 ## Topics
 1. Collection management (multiple named vector spaces)
 2. Batch insert for performance
