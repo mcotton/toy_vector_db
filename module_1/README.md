@@ -29,6 +29,16 @@ By the end of this module you'll have a working `VectorStore` class that you'll 
 4. Time complexity: O(n * d) per query
 5. Space complexity: O(n * d) for storage
 
+## Optional: Visualizing Search Time Scaling
+
+**Goal:** See how brute-force search time grows with dataset size, and understand what O(n * d) actually feels like.
+
+**Exercise:** Time your `search()` method across different dataset sizes (100, 1000, 10000, 100000 vectors) at a fixed dimensionality (e.g., 128). Plot dataset size vs. query time. Is the relationship linear? Then fix n=10000 and vary dimensionality (8, 64, 256, 768). Plot dimensions vs. query time. Is that linear too?
+
+**Key insight:** Brute force is predictable — time scales linearly with both n and d. There are no surprises, no worst cases worse than average. That predictability is actually a feature: every index you build later will have variable performance, and you'll compare against this straight line.
+
+If you'd rather skip the visualization, ask your instructor to generate the timing script and plot for you.
+
 ## Deliverable
 Build a `VectorStore` class:
 - `insert(id: str, vector: list[float], metadata: dict)`

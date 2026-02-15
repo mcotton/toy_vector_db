@@ -29,6 +29,23 @@ Production systems use various strategies to handle this: over-fetching, hybrid 
 3. Over-fetching: request more than k results, filter, return top k
 4. Metadata storage and inverted indexes
 
+## Optional: Visualizing the Filtering Problem
+
+**Goal:** See why the order of filtering and searching matters, and under what conditions each approach fails.
+
+**Exercise:** Generate 1000 vectors in 2D with a metadata field "color" assigned randomly as "red" (10%), "blue" (30%), or "green" (60%). Pick a query point and search for k=5 nearest neighbors with filter `color="red"`.
+
+Plot the results of three approaches side by side:
+1. **Post-filter:** Find the 5 nearest overall, then keep only reds. How many results do you get?
+2. **Over-fetch:** Find the 50 nearest overall, keep only reds, return top 5. Better?
+3. **Pre-filter:** Search only within red points. Do you find the same results as brute-force ground truth within reds?
+
+Highlight the query point, the true top-5 red neighbors, and what each approach actually returned. Show the misses.
+
+**Key insight:** When the filtered category is rare (10%), post-filtering almost always returns fewer than k results. Over-fetching helps but requires guessing the right multiplier. Pre-filtering is exact for brute force but breaks with ANN indexes that were built on the full dataset.
+
+If you'd rather skip the visualization, ask your instructor to generate the plots for you.
+
 ## Deliverable
 Add metadata filtering to search: `search(query, k, filters={"category": "electronics"})`. Implement post-filtering first, then discuss why it's inadequate.
 

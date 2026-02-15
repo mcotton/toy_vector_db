@@ -35,6 +35,20 @@ The result: instead of storing 768 floats (3072 bytes), you store 96 centroid ID
 - Asymmetric distance computation (ADC)
 - Compression ratio: from `d * 4 bytes` to `m * 1 byte`
 
+## Optional: Visualizing Quantization Error
+
+**Goal:** See what lossy compression actually looks like — how much information is lost when you replace a subvector with its nearest centroid.
+
+**Exercise:** Take a small set of 2D points (these represent one subvector space). Run k-means with k=4 centroids. Plot the original points, the centroids, and draw lines from each point to its assigned centroid. The length of each line is the quantization error for that point.
+
+Then try k=8 and k=16 centroids. How does the average error change? What happens to points that are far from any centroid?
+
+**Extension:** Generate 1000 random 768-dim vectors. Split into m=96 subvectors (8 dims each). Run k-means with 256 centroids on one subspace. Encode and decode the subvectors (replace each with its centroid). Compare the original distance between two vectors vs. the reconstructed distance. How much error does quantization introduce?
+
+**Key insight:** PQ error is not uniform — vectors near cluster boundaries get distorted more than vectors near centroids. This means recall degradation depends on the data distribution, not just the compression ratio.
+
+If you'd rather skip the visualization, ask your instructor to generate the plots for you.
+
 ## Deliverable
 Implement PQ encoding and asymmetric distance search. Measure memory savings and recall degradation vs. exact search.
 

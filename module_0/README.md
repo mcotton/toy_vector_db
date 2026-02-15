@@ -33,6 +33,18 @@ To answer that question, you need to measure distance. This module teaches you h
    - When each is appropriate and why
 5. The curse of dimensionality — why everything gets hard in high dimensions
 
+## Optional: Visualizing Distance Metrics
+
+**Goal:** Build geometric intuition for how different distance metrics measure "closeness" differently.
+
+**Exercise:** Plot a reference point at the origin in 2D and draw the "unit circle" for each metric — the set of all points at distance=1 from the origin. Euclidean gives a circle, Manhattan gives a diamond, and cosine gives... what shape? Think about why before plotting.
+
+Then place 3-4 labeled points in 2D and compute all four distances to a query point. Rank the points by each metric. Do the rankings differ? When would they agree and when would they disagree?
+
+**Key insight:** Different metrics define "closest" differently. Two points can be nearest neighbors under cosine but not under Euclidean. This isn't a bug — it reflects what each metric cares about (direction vs. position).
+
+If you'd rather skip the visualization and move on to implementation, ask your instructor to generate the plots for you. The goal is geometric intuition, not matplotlib skills.
+
 ## Deliverable
 Implement all four distance functions from scratch (pure Python loops). Then rewrite with NumPy. Benchmark both. Explain the performance gap.
 

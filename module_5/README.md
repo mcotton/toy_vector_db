@@ -26,5 +26,21 @@ This isn't glamorous work, but it's what separates a learning exercise from some
 3. Input validation and error handling
 4. Choosing which index to use per collection
 
+## Optional: API Comparison Study
+
+**Goal:** Learn from production vector databases before designing your own API.
+
+**Exercise:** Pick 2-3 production vector databases (e.g., Qdrant, Pinecone, ChromaDB, Weaviate) and look at their Python client APIs. For each, find the code to: create a collection, insert vectors, search, and filter by metadata. Compare:
+- How many lines of code does each operation take?
+- What do they name their methods? (`insert` vs `upsert` vs `add`?)
+- How do they handle configuration (distance metric, dimensions, index type)?
+- What do error messages look like when you pass wrong dimensions?
+
+Write down 3-5 design decisions you'd steal for your own API, and 1-2 things you'd do differently.
+
+**Key insight:** Good APIs are consistent, hard to misuse, and give clear errors. Bad APIs require reading source code to understand. Studying existing designs is faster than inventing from scratch.
+
+If you'd rather skip this research and dive straight into coding, that's fine — but expect to redesign your API at least once.
+
 ## Deliverable
 Refactor into a clean `VectorDB` class with collection support and configurable index backend.

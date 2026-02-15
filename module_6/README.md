@@ -29,5 +29,19 @@ You'll also discover failure modes: when does semantic search return irrelevant 
 4. Observing failure modes: when does semantic search fail and why?
 5. RAG pipeline: retrieve → augment → generate
 
+## Optional: Visualizing Embedding Space
+
+**Goal:** See how real embeddings organize by meaning, not by surface-level word overlap.
+
+**Exercise:** Embed 30-50 short sentences from 3-4 distinct topics (e.g., cooking recipes, programming concepts, sports scores, weather descriptions). Use PCA or t-SNE to project the embeddings down to 2D. Plot them colored by topic.
+
+Do the clusters separate cleanly? Find cases where sentences from different topics end up close together — why did the model think they were similar? Find cases where sentences from the same topic are far apart — what makes them different in embedding space?
+
+**Extension:** Embed pairs of sentences that are semantically similar but lexically different ("The car is fast" / "The automobile has great speed") and pairs that are lexically similar but semantically different ("bank of the river" / "bank account"). Plot them. Does the model handle these correctly?
+
+**Key insight:** Embeddings capture meaning, not words. But they're not perfect — the model's training data and architecture create blind spots. Understanding where embeddings fail is as valuable as understanding where they succeed, especially for building reliable RAG pipelines.
+
+If you'd rather skip the visualization, ask your instructor to generate the plots for you.
+
 ## Deliverable
 Build a working semantic search demo. Index a corpus, search with natural language, show results. Feed retrieved results to an LLM as context.

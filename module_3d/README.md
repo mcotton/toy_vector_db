@@ -43,6 +43,18 @@ The key parameters you'll tune:
 - Search: start at top layer, greedy descend, beam search at bottom
 - Parameters: M (max connections), ef_construction (build quality), ef_search (search quality)
 
+## Optional: Visualizing Graph Search
+
+**Goal:** See how greedy graph search navigates toward a query, and understand why hierarchy prevents getting stuck.
+
+**Exercise 1 — Flat NSW:** Generate 100 random 2D points. Build a simple navigable small-world graph: for each point, connect it to its M=4 nearest neighbors. Pick a query point and animate (or step through) greedy search: start at a random node, move to the neighbor closest to the query, repeat until no neighbor is closer. Plot the path taken. Does it find the true nearest neighbor? Try different starting points — does it sometimes get stuck?
+
+**Exercise 2 — Adding hierarchy:** Build a 2-layer version. Layer 1 has ~10 randomly selected nodes (connected to each other). Layer 0 has all 100 nodes. Search layer 1 first (big leaps), then refine in layer 0 (precise steps). Plot both search paths. How does starting from the top layer change the result compared to starting from a random node in the bottom layer?
+
+**Key insight:** In a flat graph, greedy search depends heavily on the starting point — a bad start means getting stuck in a local minimum. The hierarchy provides a good starting point by doing a coarse search first. This is the same principle as binary search (coarse to fine) applied to graph traversal.
+
+If you'd rather skip the visualization, ask your instructor to generate the plots for you.
+
 ## Deliverable
 Implement HNSW from scratch. Benchmark recall@10 and queries/second against brute force, KD-Tree, and LSH.
 

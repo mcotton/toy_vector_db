@@ -26,6 +26,21 @@ Along the way, you'll learn why memory layout matters for performance, evaluate 
 3. Saving and loading the vector store to/from disk
 4. What to persist: vectors, metadata, index structures
 
+## Optional: Visualizing the Vectorization Speedup
+
+**Goal:** See why contiguous memory and vectorized operations matter, not just hear that they're faster.
+
+**Exercise:** Benchmark three approaches to computing distances between a query and n stored vectors:
+1. Python loop over a list of Python lists
+2. Python loop over a list of NumPy arrays
+3. Single vectorized NumPy operation on a contiguous `(n, d)` array
+
+Plot n (100 to 100,000) vs. query time for all three on the same chart. The gap between approach 1 and approach 3 should be dramatic (100-300x).
+
+**Key insight:** The speedup isn't just "NumPy is faster." It's about memory layout. A contiguous array lets the CPU load sequential data into cache lines efficiently. A list of separate objects forces the CPU to chase pointers across memory. Vectorized operations also push the loop into C, avoiding Python's per-element overhead.
+
+If you'd rather skip the visualization, ask your instructor to generate the benchmark script and chart for you.
+
 ## Deliverable
 Add `save(path)` and `load(path)` methods to the VectorStore. Choose a serialization format and justify the choice.
 

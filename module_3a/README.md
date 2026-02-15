@@ -33,6 +33,18 @@ In low dimensions (2D, 3D), this is powerful — you might visit only 10-20 node
 - Search: traversal + backtracking
 - Why performance degrades exponentially with dimensions
 
+## Optional: Visualizing KD-Tree Partitioning
+
+**Goal:** See how a KD-Tree recursively divides 2D space and understand why nearby points can end up in different partitions.
+
+**Exercise:** Generate 20-30 random 2D points and build a KD-Tree. Plot the points and draw the split lines: the root splits with a vertical line (split_dim=0), the next level splits with horizontal lines (split_dim=1), alternating at each depth. Color-code points by which leaf they belong to.
+
+Then pick a query point, highlight its leaf region, and show which other regions the backtracking step would need to check (regions where the split boundary is closer than the current best distance). This visualizes why backtracking is necessary — the nearest neighbor can be across a split boundary.
+
+**Key insight:** In 2D, most split boundaries are far enough from the query that you prune large regions. As you increase dimensions, the split boundaries get closer relative to inter-point distances (because each boundary only tests one dimension out of many). This is why pruning fails in high dimensions.
+
+If you'd rather skip the visualization, ask your instructor to generate the plot for you.
+
 ## Deliverable
 Implement a KD-Tree index. Run search on 3-dim, 100-dim, and 768-dim data. Compare recall and speed against brute force.
 
