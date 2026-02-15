@@ -30,6 +30,18 @@ This creates a new set of trade-offs to explore: how many hash functions per tab
 - Multiple hash tables for better recall
 - Tuning: number of hash functions vs. number of tables
 
+## Optional: Visualizing Hyperplane Hashing
+
+Before implementing the full LSH index, it helps to *see* what random hyperplane hashing is doing. This is an optional visualization exercise using matplotlib.
+
+**Exercise:** Generate 200 random 2D points, create K random hyperplanes, hash each point, and plot the points colored by bucket with the hyperplane lines drawn through the origin. Experiment with K=1, 2, 3, 4, 8, 50, 100.
+
+**Key observation:** In 2D, K hyperplanes through the origin create at most **2K** regions (linear growth). But in d dimensions with d >= K, they can create up to **2^K** regions (exponential). This means LSH gets *more* useful as dimensions increase — the opposite of KD-Trees. The 2D visualization shows the mechanism correctly but can mislead about effectiveness at scale.
+
+**Verification:** After the 2D plot, compare the number of occupied buckets for the same K across different dimensions (2D, 10D, 100D, 768D) to confirm that higher dimensions produce more distinct buckets.
+
+If you'd rather skip this and move on to implementation, ask your instructor to generate the visualization code for you. The goal is understanding, not matplotlib skills.
+
 ## Deliverable
 Implement an LSH index using random hyperplane projections. Measure recall@10 as you vary the number of hash tables and hash bits.
 
