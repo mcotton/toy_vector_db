@@ -15,11 +15,15 @@ If you can answer #1 with something like "an array of numbers" and have any intu
 
 ## Introduction
 
-Modern AI systems (ChatGPT, image search, recommendation engines) convert data — text, images, audio — into arrays of numbers called **embeddings**. These embeddings live in high-dimensional space, and their positions encode meaning: similar concepts end up near each other.
+Modern AI systems (ChatGPT, image search, recommendation engines) convert data — text, images, audio — into arrays of numbers called **embeddings**. An embedding is just a list of numbers, like `[0.23, -0.87, 0.41, ...]`. The key idea: the AI model is trained so that **similar inputs produce similar lists of numbers**. Two sentences with similar meaning end up with similar embeddings; two unrelated sentences get very different ones.
+
+When we say these embeddings live in "high-dimensional space," we mean: each number in the list is a dimension. A 2D vector like `[3, 5]` is a point on a flat plane — you can plot it on graph paper. A 3D vector like `[3, 5, 2]` is a point in the space of a room. A 768-dimensional vector is the same concept extended to 768 axes — you can't visualize it, but the math works the same way. Most embedding models produce vectors with hundreds or thousands of dimensions.
 
 A vector database stores these embeddings and answers one fundamental question: **given a new vector, which stored vectors are most similar to it?**
 
-To answer that question, you need to measure distance. This module teaches you how, starting from first principles. You'll implement four different distance metrics by hand, understand when each is appropriate, and discover why high-dimensional space behaves in unintuitive ways.
+To answer that question, you need to measure distance. If two points are close together, they're similar. If they're far apart, they're different. But "distance" can mean different things depending on what you care about — the straight-line distance between two points, the angle between their directions, or something else entirely.
+
+This module teaches you how to measure distance, starting from first principles. You'll implement four different distance metrics by hand, understand when each is appropriate, and discover why high-dimensional space behaves in unintuitive ways.
 
 ## Topics
 1. What is a vector in this context? (data point in high-dimensional space, not physics)

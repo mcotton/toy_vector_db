@@ -6,7 +6,9 @@
 
 No readiness gate here — this module is a menu, not a sequence. Pick topics that interest you. Each is largely independent, though some build on concepts from earlier modules.
 
-Skim the list below and pick 1-2 that you're most curious about. For each, think about: why would a production system need this? What problem does it solve that our toy database doesn't handle?
+By this point, you've built a working vector database with search, persistence, multiple index types, filtering, and real embeddings. That covers the core of what a vector database does. But production systems face additional challenges that our toy database sidesteps: what happens when data changes? When multiple users share the system? When the data outgrows a single machine? Each topic below addresses one of these real-world concerns.
+
+Skim the list and pick 1-2 that you're most curious about. For each, think about: why would a production system need this? What problem does it solve that our toy database doesn't handle?
 
 ## Topics
 

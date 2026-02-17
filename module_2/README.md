@@ -14,11 +14,15 @@ Answer these readiness questions:
 
 ## Introduction
 
-Your Module 1 VectorStore works, but it has two problems: (1) it loses all data when the process ends, and (2) it uses Python lists of separate NumPy arrays, which means scattered memory and no ability to use fast vectorized operations across the full dataset.
+Your Module 1 VectorStore works, but it has two problems: (1) it loses all data when the process ends, and (2) it's slower than it needs to be because of how it stores data in memory.
 
-This module solves both. You'll refactor the internal storage to use a single **contiguous NumPy array** — which unlocks vectorized search (replacing your Python loop with a single matrix operation). Then you'll add save/load so your database persists to disk.
+**The memory layout problem:** Right now your vectors are stored as separate Python objects — a list of individual arrays scattered across memory. When your CPU needs to process them one after another, it has to jump to a different memory location for each vector. This is like reading a book where every page is in a different room — you spend most of your time walking between rooms instead of reading.
 
-Along the way, you'll learn why memory layout matters for performance, evaluate serialization options (pickle, JSON, NumPy binary formats), and understand the trade-offs of each.
+A **contiguous array** stores all vectors packed together in one block of memory. The CPU can read through them sequentially without jumping around, and NumPy can process the entire block in a single operation (called **vectorization**) instead of looping through vectors one at a time in Python. This alone can make search 100-300x faster.
+
+**The persistence problem:** When your Python process exits, everything in memory disappears. **Serialization** is the process of converting in-memory data into bytes that can be saved to a file and loaded back later. Think of it like saving a game — you need a format that captures the full state and can reconstruct it. There are multiple ways to serialize data (JSON, pickle, NumPy's binary format), each with different trade-offs in speed, file size, and compatibility.
+
+This module solves both problems. You'll refactor storage to use a single contiguous NumPy array, then add save/load so your database survives restarts.
 
 ## Topics
 1. Memory layout: Python lists vs. NumPy contiguous arrays — why it matters

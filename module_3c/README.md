@@ -18,15 +18,22 @@ KD-Trees tried to search faster by skipping vectors. LSH tried to search faster 
 
 1 million 768-dim float32 vectors = ~3 GB. Manageable. But 100 million = ~300 GB, and 1 billion = ~3 TB. No single machine has that much RAM. You need compression.
 
+**What is lossy compression?** Think about JPEG images. A raw photo might be 24 MB; a JPEG version is 2 MB. The JPEG looks almost identical, but if you zoom in, fine details are gone. You traded precision for size, and the original data can't be recovered. PQ does the same thing for vectors — it's the JPEG of vector search.
+
+**What is k-means?** K-means is a clustering algorithm. Given a pile of data points and a number k, it finds k "representative" points (called **centroids**) that summarize the data. The algorithm is simple: (1) place k centroids randomly, (2) assign each data point to its nearest centroid, (3) move each centroid to the average position of its assigned points, (4) repeat steps 2-3 until the centroids stop moving. The result: k centroids that capture the general shape of the data. You don't need to implement k-means yourself (scikit-learn provides it), but understanding the idea is essential for PQ.
+
+**What is a codebook?** A codebook is just a lookup table: a list of representative values (centroids), each identified by an ID number. Instead of storing the original value, you store the ID of the closest representative. Think of it like a paint color chart — instead of storing the exact RGB color `(142, 87, 203)`, you store "color #47" and look up the RGB value when you need it. The codebook is the chart; the ID is the swatch number.
+
+**How PQ works:**
+
 PQ compresses each vector from `d * 4 bytes` down to `m bytes` (where m is typically 8-96), achieving 30-200x compression. The trick: instead of compressing the whole vector at once, PQ splits it into **subvectors** and compresses each independently.
 
-Here's how it works:
 1. **Split** each d-dimensional vector into m subvectors (e.g., 768 dims → 96 subvectors of 8 dims each)
 2. **Train** a small k-means codebook (typically 256 centroids) on each subspace independently
-3. **Encode** each subvector as the ID of its nearest centroid (1 byte if 256 centroids)
+3. **Encode** each subvector as the ID of its nearest centroid (1 byte if 256 centroids — values 0-255 fit in a single byte)
 4. **Search** by precomputing distances from the query's subvectors to all centroids, then look up and sum
 
-The result: instead of storing 768 floats (3072 bytes), you store 96 centroid IDs (96 bytes). 32x compression. The cost is precision — you're measuring distance to centroids, not to the original vectors.
+The result: instead of storing 768 floats (3072 bytes), you store 96 centroid IDs (96 bytes). 32x compression. The cost is precision — you're measuring distance to centroids, not to the original vectors. Like JPEG, you're betting that "close enough" is good enough.
 
 ## Topics
 - Subvector decomposition: splitting a d-dimensional vector into m subvectors

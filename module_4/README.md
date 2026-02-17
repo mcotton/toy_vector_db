@@ -14,14 +14,16 @@ Answer these readiness questions:
 
 ## Introduction
 
-Every real-world vector search includes constraints: "find similar products in the electronics category," "find similar documents written in the last year," "find similar images tagged as landscapes." Pure vector similarity isn't enough — you need to combine it with metadata filtering.
+So far, every search you've built answers: "what are the k most similar vectors?" But real users ask more specific questions: "find me similar products, **but only in the electronics category**" or "find similar documents, **but only from the last 30 days**." You need to combine vector similarity with traditional filters.
 
-This sounds simple but creates a fundamental tension. There are two obvious approaches, and both are flawed:
+**What is metadata?** Each vector in your store already has a metadata dict — key-value pairs like `{"category": "electronics", "year": 2024, "brand": "Sony"}`. Metadata describes the item the vector represents. Filtering means restricting your search results to vectors whose metadata matches certain conditions.
 
-- **Post-filtering**: run vector search as normal, get top-k results, then remove results that don't match the filter. Problem: you might filter out most of your results and return fewer than k.
-- **Pre-filtering**: find all vectors matching the filter first, then search only within that subset. Problem: your ANN index was built over the *full* dataset — searching a subset may miss the true nearest neighbors or require a separate index per filter value.
+**Why is this harder than it sounds?** If you were using a regular database, filtering is trivial — SQL WHERE clauses handle it. But your ANN indexes (KD-Tree, LSH, HNSW) were built to navigate the *entire* vector space. They don't know about metadata categories. This creates a fundamental tension:
 
-Production systems use various strategies to handle this: over-fetching, hybrid indexes, partitioned indexes. You'll implement the simple approaches first and discover their limitations firsthand.
+- **Post-filtering**: run vector search as normal, get top-k results, then remove results that don't match the filter. Problem: if only 5% of your data matches the filter, most of your top-k results get thrown out. You asked for 10 results and might get 1.
+- **Pre-filtering**: find all vectors matching the filter first, then search only within that subset. Problem: your ANN index was built over the *full* dataset — it can't efficiently search arbitrary subsets. You'd need a separate index per filter value, or fall back to brute force on the filtered subset.
+
+Neither approach is satisfying. Production systems use various strategies to handle this: over-fetching (get way more than k results, then filter), hybrid indexes, partitioned indexes. You'll implement the simple approaches first and discover their limitations firsthand.
 
 ## Topics
 1. Post-filtering: search first, filter results after

@@ -16,9 +16,11 @@ Answer these readiness questions:
 
 In Module 0 you learned to measure the distance between two vectors. Now you'll search an entire collection: given a query vector, find the k closest stored vectors and return them in order.
 
-The simplest approach is **brute force**: compare the query against every stored vector, keep track of the best results, return the top k. It's slow — O(n) comparisons per query — but it's always correct, and that makes it the gold standard for evaluating every optimization you'll build later.
+The simplest approach is **brute force**: compare the query against every stored vector, keep track of the best results, return the top k. Imagine looking for a book in an unsorted pile — you have no choice but to check every single one. That's brute force. It's slow, but it's always correct, and that makes it the gold standard for evaluating every optimization you'll build later.
 
-This module also introduces a core data structure decision: how do you efficiently track the "top k" results as you scan? Sorting all results works but is wasteful. A **heap** gives you the top k in O(n log k) — you'll understand why and implement it.
+**A note on time complexity (Big-O):** When we say brute-force search is O(n), we mean the time it takes grows linearly with the number of vectors. Double the vectors, double the search time. O(n * d) means it also grows linearly with dimensionality — each distance calculation involves d numbers. You don't need to be a Big-O expert for this module, but you should understand the basic idea: it's a shorthand for "how does the work scale as the input gets bigger?"
+
+This module also introduces a data structure decision: how do you efficiently track the "top k" results as you scan? One approach is to compute all distances, sort them, and take the first k. That works but does unnecessary work — you don't need a fully sorted list, just the k smallest values. A **heap** is a data structure that maintains a running "top k" efficiently. Think of it like a bouncer at a club with a capacity of k: every time a new candidate shows up, you only let them in if they're better than the worst person currently inside. The heap makes this check fast. You'll understand why and implement it.
 
 By the end of this module you'll have a working `VectorStore` class that you'll keep improving throughout the course.
 

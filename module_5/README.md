@@ -14,11 +14,13 @@ Answer these readiness questions:
 
 ## Introduction
 
-You've built distance functions, brute-force search, persistence, and multiple index types. But the code is scattered across modules with inconsistent interfaces. A user would need to know which file to import, how to configure each index, and how to manage multiple vector spaces.
+You've built distance functions, brute-force search, persistence, and multiple index types. But right now, using your code looks something like: import from this file, call this function, manually create a NumPy array, remember to pass the right arguments in the right order. A user would need to read your source code to figure out how anything works. That's not a library — it's a pile of scripts.
 
-This module is about turning your collection of implementations into a cohesive library. You'll design a `VectorDB` class that manages named collections, each with its own dimension, distance metric, and index backend. You'll add input validation so users get clear errors instead of cryptic NumPy exceptions. You'll add batch insert so users don't pay per-vector overhead.
+**What is an API?** An API (Application Programming Interface) is the set of functions, classes, and methods that a user interacts with. Think of it like the controls on a car: the steering wheel, pedals, and gear shift are the API. The engine, transmission, and braking system are the implementation hidden underneath. A good API is easy to use correctly and hard to use wrong. A bad API requires reading the owner's manual for every action.
 
-This isn't glamorous work, but it's what separates a learning exercise from something actually usable. The decisions you make here (naming, defaults, error messages, what to expose vs. hide) are the same decisions library authors face.
+**What does "interface design" mean here?** You'll design a `VectorDB` class that wraps all your implementations behind a clean, consistent surface. A user should be able to create a collection, insert vectors, and search — without knowing whether the index underneath is brute force, LSH, or HNSW. You'll add input validation so mistakes produce helpful error messages ("Expected 768 dimensions, got 384") instead of cryptic NumPy crashes. You'll add batch insert so users can add thousands of vectors efficiently.
+
+This isn't glamorous work, but it's what separates a learning exercise from something actually usable. The decisions you make here (naming, defaults, error messages, what to expose vs. hide) are the same decisions library authors face. If you've ever been frustrated by a confusing library, this is your chance to do better.
 
 ## Topics
 1. Collection management (multiple named vector spaces)

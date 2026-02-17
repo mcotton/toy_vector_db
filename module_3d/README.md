@@ -19,16 +19,21 @@ You've now built three index types:
 - **LSH** works in high dimensions but needs many tables for good recall (memory-expensive, recall is probabilistic)
 - **PQ** compresses vectors but loses precision (lossy)
 
-HNSW takes yet another approach: build a **graph** where each vector is a node connected to its nearest neighbors. To search, start at a random node and greedily walk toward the query — at each step, move to whichever neighbor is closest to what you're looking for.
+HNSW takes yet another approach, and it's the one that won. It's what most production vector databases (Qdrant, Weaviate, pgvector) use today. The idea: build a **graph** and walk through it.
 
-The problem with a flat graph: greedy search gets stuck in local minima, especially in large datasets. You might find a "pretty good" neighbor but miss the actual nearest one because you'd need to traverse through distant nodes to reach it.
+**What is a graph?** In computer science, a graph is a set of **nodes** (points) connected by **edges** (links). Think of a social network: each person is a node, and friendships are edges. Or a road map: cities are nodes, roads are edges. In HNSW, each vector is a node, and edges connect it to its nearest neighbors. The graph captures the neighborhood structure of your data.
 
-The solution is **hierarchy**. HNSW builds multiple layers of the graph:
-- **Top layers** have very few nodes spaced far apart — like highway exits. Greedy search here takes huge leaps across the dataset.
+**What is greedy search?** A greedy algorithm makes the locally best choice at each step. Imagine you're lost in a city trying to reach a landmark you can see in the distance. A greedy approach: at every intersection, take the road that points most directly toward the landmark. This often works well but can fail — you might hit a dead end or a river with no bridge. In HNSW, greedy search means: at each node, look at all its neighbors and move to whichever one is closest to your query. Repeat until no neighbor is closer than where you are.
+
+**The problem with a flat graph:** Greedy search can get stuck. Imagine trying to walk from one end of a large city to the other using only local streets — you'd take thousands of tiny steps, and if the street grid has gaps, you might end up in a dead end (a **local minimum**) where no neighbor is closer to your destination, but you haven't found the true nearest point.
+
+**The solution is hierarchy.** HNSW builds multiple layers of the graph, like a transit system:
+- **Top layers** have very few nodes spaced far apart — like an airline network connecting major cities. Greedy search here takes huge leaps across the dataset.
+- **Middle layers** have more nodes — like a train network. More precise steps.
 - **Bottom layer** has every node — like local streets. Search here is precise but slow.
 - You start at the top and descend: each layer gets you closer, with increasing precision.
 
-This is analogous to a **skip list** — a data structure that adds "express lanes" over a linked list for O(log n) search. HNSW applies the same idea to graph-based nearest neighbor search.
+**The skip list analogy:** A **linked list** is a chain of items where each item points to the next — to find something, you walk the chain from the start. A **skip list** adds "express lanes" above the base chain: a top layer with every 16th item, then every 4th, then every item. Searching starts at the top (big jumps), drops down when you overshoot, and refines at the bottom. HNSW applies this same coarse-to-fine principle, but to graph-based search instead of a linear chain.
 
 The key parameters you'll tune:
 - **M**: max connections per node (more = better recall, more memory)

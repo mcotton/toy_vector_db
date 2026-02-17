@@ -14,11 +14,13 @@ Answer these readiness questions:
 
 ## Introduction
 
-Up until now, you've been searching over random vectors. The numbers were meaningless — useful for testing algorithms, but not for answering real questions. This module connects your vector database to real embedding models and real data.
+Up until now, you've been searching over random vectors — lists of meaningless numbers, useful for testing algorithms but not for answering real questions. This module is where your vector database starts doing something useful.
 
-You'll take actual text documents, convert them to embeddings using a pre-trained model, store them in your vector database, and search by meaning. Ask "What is photosynthesis?" and find documents about plants converting sunlight to energy — even if they never use the word "photosynthesis."
+**What is an embedding model?** An embedding model is a neural network that converts data (text, images, audio) into a vector. You give it a sentence like "The cat sat on the mat" and it returns something like `[0.23, -0.87, 0.41, ..., 0.15]` — a list of hundreds of numbers. The model has been trained so that inputs with similar meaning produce similar vectors. You don't need to understand how the model works internally — you'll use it as a black box via a library (sentence-transformers) or an API (OpenAI, Cohere).
 
-Then you'll build a RAG pipeline: retrieve relevant documents from your vector database, inject them as context into an LLM prompt, and generate an answer grounded in your data. This is the architecture behind ChatGPT plugins, enterprise search, and most production AI applications.
+**What is semantic search?** Traditional keyword search matches exact words — searching for "car" won't find documents about "automobiles." Semantic search matches meaning — the embedding model maps both "car" and "automobile" to nearby vectors, so a search for one finds the other. This is powerful but not magic: the model can make mistakes, and some queries are genuinely ambiguous.
+
+**What is RAG?** RAG (Retrieval-Augmented Generation) is a pattern for making LLMs (like ChatGPT) answer questions using your data. The steps are: (1) take the user's question, (2) embed it as a vector, (3) search your vector database for relevant documents, (4) paste those documents into the LLM's prompt as context, (5) ask the LLM to answer based on that context. This is the architecture behind ChatGPT plugins, enterprise search, and most production AI applications. You'll build a working version in this module.
 
 You'll also discover failure modes: when does semantic search return irrelevant results? What kinds of queries break it? Understanding these limitations is as important as understanding the successes.
 

@@ -14,9 +14,15 @@ Answer these readiness questions:
 
 ## Introduction
 
-Brute force compares your query against every stored vector. Can we do better? What if we could organize vectors spatially — like sorting a list lets you binary search instead of scanning — so we only check a fraction of them?
+Brute force compares your query against every stored vector. Can we do better? What if we could organize vectors spatially so we only need to check a fraction of them?
 
-A **KD-Tree** (k-dimensional tree) does exactly this. It recursively splits the vector space in half, alternating which dimension it splits on. When searching, you traverse the tree to find the region where your query falls, then check whether neighboring regions might contain closer points (backtracking).
+**The analogy:** Imagine you're looking for a specific house in a city. Brute force means knocking on every door. But if you know the house is in the northeast part of town, you can ignore the southwest entirely. That's the idea behind spatial partitioning — organize data by location so you can skip large regions that are far from what you're looking for.
+
+**What is a tree?** A tree is a data structure where each item (called a node) can point to child items below it. A **binary tree** has at most two children per node (left and right). You start at the top (the root) and follow paths down to find what you need. If you've never built one, don't worry — this module includes scaffolding to build a basic binary tree first.
+
+**What is recursion?** A recursive function calls itself with a smaller version of the problem. For example, to search a tree: check the current node, then recursively search the left subtree and the right subtree. Each call handles a smaller piece until you hit a base case (like reaching a node with no children). If this is new to you, practice with a simple example (like computing factorial: `5! = 5 * 4!`) before starting.
+
+A **KD-Tree** (k-dimensional tree) applies binary tree thinking to multi-dimensional data. It recursively splits the vector space in half, alternating which dimension it splits on. Think of it like organizing a map: first divide by east/west, then within each half divide by north/south, then east/west again, and so on. When searching, you traverse the tree to find the region where your query falls, then check whether neighboring regions might contain closer points (this is called **backtracking**).
 
 In low dimensions (2D, 3D), this is powerful — you might visit only 10-20 nodes out of thousands. But as dimensions increase, something goes wrong. Discovering *what* and *why* is the real lesson of this module. KD-Trees are historically important but fail in high dimensions, and understanding that failure motivates everything that comes after (LSH, PQ, HNSW).
 

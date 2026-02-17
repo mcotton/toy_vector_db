@@ -14,13 +14,17 @@ Answer these readiness questions:
 
 ## Introduction
 
-Module 3A taught you that spatial partitioning (trees) breaks down in high dimensions because you can't prune — every region might contain the nearest neighbor. LSH takes a completely different approach: instead of partitioning space, it uses **random projections** to hash vectors so that similar vectors are likely to end up in the same bucket.
+Module 3A taught you that spatial partitioning (trees) breaks down in high dimensions because you can't prune — every region might contain the nearest neighbor. LSH takes a completely different approach: instead of carefully organizing space, it uses **randomness** to group similar vectors together.
 
-The core idea is counterintuitive: **hash collisions are the feature, not the bug.** A normal hash function tries to spread inputs evenly and avoid collisions. LSH deliberately designs hash functions where nearby vectors collide (hash to the same bucket) with high probability, and distant vectors don't.
+**What is a hash function?** A hash function takes an input and produces a fixed output (a "hash"). For example, Python's `hash("hello")` produces a number. Normal hash functions (like MD5 or SHA-256) are designed so that similar inputs produce very *different* outputs — "hello" and "hellp" get completely different hashes. This is good for hash tables and checksums, where you want even distribution.
 
-For cosine similarity, the technique is elegant: generate random hyperplanes through the origin. Each hyperplane divides space in half. A vector is on one side (+1) or the other (0). Stack multiple hyperplanes and you get a binary hash code. Vectors pointing in similar directions will end up on the same side of most hyperplanes, giving them similar (or identical) hash codes.
+**LSH flips this on its head.** A locality-sensitive hash function is designed so that similar inputs produce the *same* output. Two vectors that are close together should hash to the same value (land in the same bucket). Two vectors that are far apart should hash to different values. Hash collisions — normally a problem — are the entire point.
 
-The catch: a single hash table might miss similar vectors that got unlucky with the random projections. The fix: use **multiple independent hash tables**, each with its own random hyperplanes. If a neighbor appears in *any* table, you find it. More tables = better recall, but more memory.
+**How does it work?** The technique for cosine similarity uses random **hyperplanes**. A hyperplane is just a dividing surface: in 2D it's a line through the origin, in 3D it's a flat plane through the origin, in higher dimensions it's the same idea extended. Each hyperplane divides all of space into two halves. For any vector, you check which side it falls on — this is computed with a **dot product** (multiply corresponding elements and add them up). If the dot product is positive, the vector is on one side (hash bit = 1); if negative, the other side (hash bit = 0).
+
+Stack multiple hyperplanes and each vector gets a multi-bit hash code like `10110`. Vectors pointing in similar directions end up on the same side of most hyperplanes, so they get similar (or identical) hash codes — and land in the same bucket.
+
+The catch: a single set of random hyperplanes might separate two similar vectors by bad luck. The fix: use **multiple independent hash tables**, each with its own random hyperplanes. If two neighbors end up in the same bucket in *any* table, you find them. More tables = better recall, but more memory.
 
 This creates a new set of trade-offs to explore: how many hash functions per table? How many tables? How do these parameters affect recall, precision, and memory?
 
