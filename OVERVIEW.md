@@ -9,7 +9,7 @@ This is a learning project to build a vector database from scratch in Python. Th
 - Language: Python
 - Storage: In-memory + simple file save/load
 - Interface: Python library only (importable module)
-- Indexing: All four strategies, sequenced for learning (KD-Tree → LSH → PQ → HNSW)
+- Indexing: All four core strategies, sequenced for learning (KD-Tree → LSH → PQ → HNSW), plus optional IVF (Module 3E)
 
 ---
 
@@ -51,19 +51,20 @@ Between each module there is an optional deep-dive that bridges concepts and pro
 | 2 → 3A | `module_2/DETOUR_index_landscape.md` | The Indexing Landscape — What Production Systems Use |
 | 3A → 3B | `module_3a/DETOUR_why_trees_fail.md` | Why Spatial Partitioning Hits a Wall |
 | 3B → 3C | `module_3b/DETOUR_memory_bottleneck.md` | When Memory Is the Real Bottleneck |
-| 3C → 3D | `module_3c/DETOUR_graph_revolution.md` | How Graphs Conquered Vector Search |
+| 3C/3E → 3D | `module_3c/DETOUR_graph_revolution.md` | How Graphs Conquered Vector Search |
 | 3D → 4 | `module_3d/DETOUR_beyond_similarity.md` | Real Queries Are Never Just "Find Similar" |
 | 4 → 5 | `module_4/DETOUR_api_patterns.md` | How Production Vector DBs Design Their APIs |
 | 5 → 6 | `module_5/DETOUR_embedding_ecosystem.md` | The Embedding Model Ecosystem |
 | 6 → 7 | `module_6/DETOUR_benchmarking_methodology.md` | How to Benchmark Honestly |
 
 ## How Each Session Works
-1. Introduce the module's core concepts and ask questions to gauge understanding
-2. Learner explains back — instructor challenges gaps
-3. Learner writes the code — instructor reviews, critiques, and asks "why did you do it this way?"
-4. Grading: instructor writes and runs a test suite against the deliverable (see below)
-5. Checkpoint: learner must pass the questions before moving on
-6. If they can't pass, we go back. No moving forward with gaps.
+1. Readiness: learner answers the module's "Before You Start" questions — gaps get addressed (or routed back to an earlier module) before diving in
+2. Introduce the module's core concepts and ask questions to gauge understanding
+3. Learner explains back — instructor challenges gaps
+4. Learner writes the code — instructor reviews, critiques, and asks "why did you do it this way?"
+5. Grading: instructor writes and runs a test suite against the deliverable (see below)
+6. Checkpoint: learner must pass the questions before moving on
+7. If they can't pass, we go back. No moving forward with gaps.
 
 ## Verification and Grading
 - **The learner writes the code; the instructor writes the tests.** At the end of each module, the instructor (Claude) generates a grading test suite against the learner's deliverable and runs it. Failures are reviewed Socratically — the learner explains and fixes them — before the module is marked complete.

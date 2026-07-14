@@ -12,13 +12,13 @@ Before you build specific index types, it's worth seeing the full landscape. Kno
 
 ## Topics
 
-- **The speed/recall/memory triangle.** Every index trades between query speed, search accuracy (recall), and memory consumption. You can usually pick two. Brute force has perfect recall but terrible speed. Heavy quantization saves memory but hurts recall. HNSW is fast and accurate but memory-hungry.
+- **The speed/recall/memory triangle.** Every index trades between query speed, search accuracy (recall — the fraction of the true nearest neighbors an index actually finds; defined properly in Module 3A), and memory consumption. You can usually pick two. Brute force has perfect recall but terrible speed. Heavy quantization saves memory but hurts recall. HNSW is fast and accurate but memory-hungry.
 
 - **What real vector databases chose.** FAISS (Meta) uses IVF+PQ as its workhorse -- optimized for billion-scale on GPUs. Pinecone combines graph-based search with quantization. Weaviate defaults to HNSW. Qdrant uses HNSW with quantization options. None use brute force as their primary path.
 
 - **Why there's no single "best" index.** A recommendation system serving 10 QPS over 1M vectors has completely different requirements than a search engine serving 10,000 QPS over 1B vectors. Index selection is driven by dataset size, query volume, latency requirements, memory budget, and acceptable recall loss.
 
-- **The evolution of the field.** Brute force → tree-based (KD-trees, 1990s) → hash-based (LSH, 2000s) → quantization (PQ) and clustering (IVF, 2010s) → graph-based (HNSW, mid-2010s). Each generation addressed limitations of the previous. You'll build representatives of each family.
+- **The evolution of the field.** Brute force → tree-based (KD-trees, 1990s) → hash-based (LSH, 2000s) → quantization (PQ) and clustering (IVF, 2010s) → graph-based (HNSW, mid-2010s). Each generation addressed limitations of the previous. You'll build representatives of each family — including IVF, in optional Module 3E.
 
 ---
 

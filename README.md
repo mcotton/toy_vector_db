@@ -22,6 +22,7 @@ A hands-on learning course for building a vector database from scratch in Python
 1. Clone this repo
 2. Create a personal branch: `git checkout -b my-progress`
 3. Set up a Python venv: `python3 -m venv venv && source venv/bin/activate && pip install numpy`
+   (Later modules add more — install as you reach them: matplotlib for the visualizations, scikit-learn for Modules 3C/3E, sentence-transformers for Module 6, hnswlib or faiss for Module 7, jupyter if you like notebooks.)
 4. Read `OVERVIEW.md` for the full curriculum
 5. Start with `module_0/README.md`
 
@@ -67,12 +68,10 @@ Keep course material improvements on `main`. Keep your personal progress on your
 Use this prompt with Claude Code to begin a tutoring session:
 
 ```
-Hi Claude, I would like to better understand vector databases and vector search.
-I would like your help learning how to design, build, and test my own vector db.
-This is more about learning than having a viable end product. I want you to prepare
-a learning plan that we can work through together. Please touch on all the major
-decisions that need to be made and let me choose which we will focus on and what we
-will skip. Do not just write the code. I want you to ask questions to ensure I am
-learning. Do not be my friend, be tough and critical in evaluating my understanding.
-Ask for clarification when needed.
+Hi Claude, teach me this course. Read CLAUDE.md and OVERVIEW.md first, then start
+me at Module 0 (or wherever SESSION_STATE.md says I left off). Follow the teaching
+style and grading process they describe: I write all the code, you guide, critique,
+and write the grading tests. Be tough and critical in evaluating my understanding —
+do not be my friend, and do not just give me answers. Ask questions to verify I am
+learning, and ask for clarification when needed.
 ```

@@ -1,6 +1,6 @@
 # Detour: How Graphs Conquered Vector Search
 
-*Optional deep-dive between Module 3C (Product Quantization) and Module 3D (HNSW)*
+*Optional deep-dive between Module 3C (Product Quantization) — or Module 3E (IVF), if taken — and Module 3D (HNSW)*
 
 ---
 

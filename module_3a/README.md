@@ -59,7 +59,7 @@ Implement a KD-Tree index. Run search on 3-dim, 100-dim, and 768-dim data. Compa
 **Grading:** your instructor writes and runs a test suite against this deliverable — it must pass, along with all previous modules' suites (see `OVERVIEW.md` → Verification and Grading).
 
 ## Implementation Notes
-- **Build step uses `sorted()` instead of median selection.** This is a pedagogical simplification — sorting at each recursive level gives O(n log² n) build time instead of O(n log n) with linear-time median selection (e.g., `np.partition`). Standard KD-Tree implementations use the faster approach. Keep this in mind when analyzing build-time complexity or comparing benchmarks against reference implementations.
+- **It's fine to use `sorted()` to find the median at each level.** Just know the cost: sorting at every recursive level gives O(n log² n) build time, while standard KD-Tree implementations use linear-time median selection (e.g., `np.partition`) for O(n log n). Keep the difference in mind when you analyze build-time complexity or compare benchmarks against reference implementations.
 
 ## Checkpoint Questions
 - At what dimensionality does your KD-Tree become slower than brute force? Why?

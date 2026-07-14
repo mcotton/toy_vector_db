@@ -24,7 +24,7 @@ This isn't glamorous work, but it's what separates a learning exercise from some
 
 ## Topics
 1. Collection management (multiple named vector spaces)
-2. Batch insert for performance
+2. Upsert semantics and batch writes for performance
 3. Input validation and error handling
 4. Choosing which index to use per collection
 
@@ -40,10 +40,13 @@ db.list_collections()            # -> ["products"]
 db.get_collection("products")    # -> the Collection
 db.delete_collection("products")
 
-col.insert(vector, metadata={"category": "electronics"})   # -> assigned id
-col.insert_batch(vectors, metadatas)                       # -> [ids]
+col.upsert("doc-42", vector, metadata={"category": "electronics"})  # insert or replace
+col.upsert_batch(ids, vectors, metadatas)
 col.search(query, k=5, filters={"category": "electronics"})
 # -> [{"id": ..., "score": ..., "metadata": {...}}, ...]
+
+db.save(path)
+db = VectorDB.load(path)   # collections, vectors, metadata, filters all survive
 ```
 
 Design rules — each one is a bug you'll otherwise ship:
@@ -54,15 +57,19 @@ Design rules — each one is a bug you'll otherwise ship:
 4. **Don't touch the caller's data.** Never mutate a metadata dict the user passed in — and never use a mutable default argument (`def insert(self, v, metadata={})` is a famous Python bug; look it up if you haven't hit it yet).
 5. **Index choice is per-collection, fixed at creation.** Switching index type on live data means a rebuild — make the user create a new collection rather than pretending it's free.
 6. **Internal state stays internal.** If your store batches pending inserts or rebuilds indexes lazily, a search immediately after an insert must still see that insert. The user never calls `rebuild_*` anything.
+7. **Ids belong to the caller, and the write op is upsert.** Module 1 had the caller supply ids; keep it that way. The Module 4 detour explains why: embedding pipelines re-process the same documents over and over, and the caller shouldn't have to track what already exists. Upserting an existing id replaces its vector and metadata — the collection doesn't grow. (An auto-id `insert` convenience on top is fine; it can't be the primary op.)
+8. **Persistence is part of the API.** You built save/load in Module 2 — a library that loses everything on restart didn't get cleaner by gaining collections. `save`/`load` must round-trip the whole database: collections, vectors, metadata, and filter indexes.
 
 ## Acceptance Script
 
 Your module is graded against a usage script that must run top to bottom without edits. It will, at minimum:
 - Create two collections with different dims, metrics, and index backends
-- `insert` and `insert_batch`, then search each collection — results best-first, exactly k of them when k matches are available
+- `upsert` and `upsert_batch`, then search each collection — results best-first, exactly k of them when k matches are available
+- Upsert the same id twice with a different vector and metadata — collection size unchanged, search reflects the new vector, filters reflect the new metadata
 - Run a filtered search where the filter matches fewer than k items — verify count and contents
-- Insert, then immediately search (no explicit commit/rebuild) — the new vector must be findable, including through filters
-- Deliberately trigger each validation rule (wrong-dim insert, wrong-dim query, unknown metric, search on a deleted collection) and check the error message quality
+- Upsert, then immediately search (no explicit commit/rebuild) — the new vector must be findable, including through filters
+- Save, load into a fresh process, repeat a filtered search — identical results
+- Deliberately trigger each validation rule (wrong-dim upsert, wrong-dim query, unknown metric, search on a deleted collection) and check the error message quality
 
 Write your own version of this script as you build. If running it feels tedious, that's the API telling you something.
 
@@ -92,3 +99,4 @@ Refactor into a `VectorDB` class satisfying the API contract above: collection s
 - Your search returns a number per result. Is bigger better or worse — and how does a user of your library know without reading the source?
 - Show the exact error message your library produces when a 384-dim vector is inserted into a 768-dim collection. Why is failing at the boundary better than letting NumPy fail inside search?
 - Why does `create_collection` take the index type upfront instead of letting users switch it later? What would switching actually require?
+- A document pipeline re-embeds 10,000 documents nightly. Walk through what happens with your API — then explain what breaks if ids were auto-assigned instead of caller-supplied.

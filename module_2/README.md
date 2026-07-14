@@ -28,7 +28,7 @@ This module solves both problems. You'll refactor storage to use a single contig
 1. Memory layout: Python lists vs. NumPy contiguous arrays — why it matters
 2. Serialization options: pickle, JSON, custom binary, NumPy's `.npy`/`.npz`
 3. Saving and loading the vector store to/from disk
-4. What to persist: vectors, metadata, index structures
+4. What to persist: vectors, metadata, index structures (no indexes exist yet — that part of the bill comes due in Module 3D)
 
 ## Optional: Visualizing the Vectorization Speedup
 

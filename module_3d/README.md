@@ -14,10 +14,11 @@ Answer these readiness questions:
 
 ## Introduction
 
-You've now built three index types:
+You've now built several index types:
 - **KD-Trees** partition space but fail in high dimensions (can't prune)
 - **LSH** works in high dimensions but needs many tables for good recall (memory-expensive, recall is probabilistic)
 - **PQ** compresses vectors but loses precision (lossy)
+- **IVF** (if you took Module 3E) partitions with data-driven clusters, but recall still leaks at cell boundaries — `nprobe` recovers it only by scanning more cells
 
 HNSW takes yet another approach, and it's the one that won. It's what most production vector databases (Qdrant, Weaviate, pgvector) use today. The idea: build a **graph** and walk through it.
 
