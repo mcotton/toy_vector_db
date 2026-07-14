@@ -51,6 +51,8 @@ If you'd rather skip the visualization, ask your instructor to generate the plot
 ## Deliverable
 Add metadata filtering to search: `search(query, k, filters={"category": "electronics"})`. Implement post-filtering first, then discuss why it's inadequate.
 
+**Grading:** your instructor writes and runs a test suite against this deliverable — it must pass, along with all previous modules' suites (see `OVERVIEW.md` → Verification and Grading).
+
 ## Checkpoint Questions
 - Why can post-filtering return fewer than k results?
 - Why can pre-filtering miss true nearest neighbors?

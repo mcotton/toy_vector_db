@@ -48,6 +48,8 @@ If you'd rather skip the visualization, ask your instructor to generate the benc
 ## Deliverable
 Add `save(path)` and `load(path)` methods to the VectorStore. Choose a serialization format and justify the choice.
 
+**Grading:** your instructor writes and runs a test suite against this deliverable (including a save → load → search round-trip) — it must pass, along with all previous modules' suites (see `OVERVIEW.md` → Verification and Grading).
+
 ## Checkpoint Questions
 - Why is `numpy.ndarray` of shape `(n, d)` faster to search than `list[list[float]]`?
 - What happens if you pickle a 1GB array? What are the alternatives?

@@ -47,3 +47,14 @@ If you'd rather skip the visualization, ask your instructor to generate the plot
 
 ## Deliverable
 Build a working semantic search demo. Index a corpus, search with natural language, show results. Feed retrieved results to an LLM as context.
+
+For the LLM step, use whatever is at hand: any chat API, a local model via Ollama, or — zero setup — paste the retrieved context and question into any chat UI by hand. The lesson is the retrieve → augment → generate loop, not API plumbing. For embeddings, `sentence-transformers` runs locally and free.
+
+Keep this corpus and its embeddings — Module 7 benchmarks against them.
+
+**Grading:** your instructor writes and runs a test suite against this deliverable — it must pass, along with all previous modules' suites (see `OVERVIEW.md` → Verification and Grading).
+
+## Checkpoint Questions
+- Your RAG pipeline answers a question confidently and wrongly. Is the failure in retrieval or generation — and what experiment tells you which?
+- Your semantic search returns an irrelevant document at rank 1. Name three distinct places in the pipeline the failure could live, and how you'd isolate each.
+- "Bank of the river" vs. "bank account": what does your search do with queries like these, and why can't a better vector index fix it?

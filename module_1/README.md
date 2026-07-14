@@ -28,8 +28,9 @@ By the end of this module you'll have a working `VectorStore` class that you'll 
 1. Linear scan: compare query against every stored vector
 2. k-nearest neighbors (kNN) — returning top-k, not just top-1
 3. Using a heap for efficient top-k selection
-4. Time complexity: O(n * d) per query
-5. Space complexity: O(n * d) for storage
+4. Vectorized selection: `np.argpartition` for O(n) top-k without sorting
+5. Time complexity: O(n * d) per query
+6. Space complexity: O(n * d) for storage
 
 ## Optional: Visualizing Search Time Scaling
 
@@ -47,7 +48,16 @@ Build a `VectorStore` class:
 - `search(query_vector: list[float], k: int) -> list[tuple[str, float]]`
 - Returns IDs and distances of k nearest neighbors
 
+Implement top-k selection **three ways**, and benchmark all three:
+1. A max-heap (`heapq`) maintained during the scan — feel the O(n log k)
+2. Compute all distances, sort, slice — the naive O(n log n)
+3. Vectorized distances + `np.argpartition` — O(n) selection, no Python loop
+
+Explain each performance gap. The heap loses to argpartition in Python — understanding *why* (per-element interpreter overhead vs. vectorized C) is the point, and it previews the memory-layout lesson in Module 2.
+
+**Grading:** your instructor writes and runs a test suite against this deliverable — it must pass, along with Module 0's suite (see `OVERVIEW.md` → Verification and Grading).
+
 ## Checkpoint Questions
 - 1M vectors, 768 dimensions: how many float operations per query?
 - At what scale does brute force become unacceptable? What's "unacceptable"?
-- Why use a max-heap instead of sorting all results?
+- Why use a max-heap instead of sorting all results? Why does `np.argpartition` beat both in Python anyway?

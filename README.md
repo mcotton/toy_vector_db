@@ -7,7 +7,7 @@ A hands-on learning course for building a vector database from scratch in Python
 - How vectors and embeddings represent data in high-dimensional space
 - Distance metrics (Euclidean, Cosine, Dot Product, Manhattan) and when to use each
 - Brute-force kNN search as a baseline
-- Four indexing strategies: KD-Trees, LSH, Product Quantization, HNSW
+- Four indexing strategies: KD-Trees, LSH, Product Quantization, HNSW (plus optional IVF)
 - Metadata filtering, API design, and real-world embedding pipelines
 - Benchmarking methodology for evaluating search systems
 
@@ -31,6 +31,8 @@ Work through modules in order. Each module has:
 - **README.md** — topics, deliverables, and checkpoint questions
 - **DETOUR_*.md** (optional) — deep-dive topics bridging to the next module
 
+Each module is **graded**: your instructor writes a test suite against your deliverable and runs it, along with the suites from every previous module. You never write the grading tests — you just have to pass them. See `OVERVIEW.md` → Verification and Grading.
+
 See `OVERVIEW.md` for the full progression and detour table.
 
 ## Tracking Your Progress
@@ -38,6 +40,25 @@ See `OVERVIEW.md` for the full progression and detour table.
 On your personal branch, create:
 - `SESSION_STATE.md` — track your current module and key learnings
 - `module_*/QA_LOG.md` — log questions, answers, and checkpoint status per module
+
+Start each `QA_LOG.md` from this template:
+
+```markdown
+# Module N — QA Log
+
+## Readiness Answers
+<!-- your answers to the Before You Start questions -->
+
+## Questions & Answers
+<!-- running log: instructor questions, your answers, corrections -->
+
+## Grading
+- [ ] Module test suite passing
+- [ ] All previous modules' suites passing
+
+## Checkpoint
+- [ ] Checkpoint questions passed
+```
 
 Keep course material improvements on `main`. Keep your personal progress on your branch.
 

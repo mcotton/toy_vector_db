@@ -36,4 +36,15 @@ You'll also compare your implementations against production libraries like FAISS
 5. Comparison against FAISS or hnswlib
 
 ## Deliverable
-A benchmark script that produces a table: index type, recall@10, QPS, memory usage.
+A benchmark script that produces a table: index type (every index you built — KD-Tree, LSH, PQ, HNSW, and IVF if you did Module 3E), recall@10, QPS, memory usage.
+
+Two requirements, both straight from the detour you just read:
+1. **Real data.** Run on your Module 6 embedded corpus, or a standard dataset (a SIFT or GloVe subset). Random vectors are allowed only as a *second* run — so you can see for yourself how much synthetic data flatters (or punishes) each index.
+2. **Report conditions.** The table's caption states: dataset and size, dimensionality, hardware, single- or multi-threaded, warm or cold start, batch size. A number without its conditions is a lie with extra steps.
+
+**Grading:** your instructor writes and runs a test suite against this deliverable — it must pass, along with all previous modules' suites (see `OVERVIEW.md` → Verification and Grading).
+
+## Checkpoint Questions
+- Your index shows 99% recall@10 on random vectors but 85% on your real embedded corpus. What property of real data explains the gap?
+- Your HNSW does 20k QPS; hnswlib does 300k on the same data at the same recall. Name three implementation-level reasons for the gap.
+- System A: 10,000 QPS at 95% recall. System B: 5,000 QPS at 99% recall. Which is better? Name two deployment scenarios with opposite answers.

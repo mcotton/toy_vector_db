@@ -61,7 +61,11 @@ The key parameters you'll tune:
 If you'd rather skip the visualization, ask your instructor to generate the plots for you.
 
 ## Deliverable
-Implement HNSW from scratch. Benchmark recall@10 and queries/second against brute force, KD-Tree, and LSH.
+Implement HNSW from scratch. Benchmark recall@10 and queries/second against brute force, KD-Tree, and LSH (and IVF, if you did Module 3E).
+
+Then make it survive a restart: add save/load for the graph, or make the deliberate decision to rebuild on load and justify it (build time vs. file complexity vs. how often restarts happen). Module 2 promised "what to persist: index structures" — this is where that bill comes due.
+
+**Grading:** your instructor writes and runs a test suite against this deliverable — it must pass, along with all previous modules' suites (see `OVERVIEW.md` → Verification and Grading).
 
 ## Checkpoint Questions
 - Why does HNSW need multiple layers? What would happen with only one layer?

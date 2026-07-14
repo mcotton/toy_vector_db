@@ -52,6 +52,8 @@ If you'd rather skip the visualization and move on to implementation, ask your i
 ## Deliverable
 Implement all four distance functions from scratch (pure Python loops). Then rewrite with NumPy. Benchmark both. Explain the performance gap.
 
+**Grading:** your instructor writes and runs a test suite against this deliverable — you don't write these tests, you just have to pass them (see `OVERVIEW.md` → Verification and Grading).
+
 ## Checkpoint Questions
 - Compute cosine similarity of `[1, 2, 3]` and `[4, 5, 6]` by hand
 - When do cosine similarity and dot product give the same nearest-neighbor ranking?

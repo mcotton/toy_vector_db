@@ -59,6 +59,12 @@ If you'd rather skip the visualization, ask your instructor to generate the plot
 ## Deliverable
 Implement PQ encoding and asymmetric distance search. Measure memory savings and recall degradation vs. exact search.
 
+**Grading:** your instructor writes and runs a test suite against this deliverable — it must pass, along with all previous modules' suites (see `OVERVIEW.md` → Verification and Grading).
+
+## Where PQ Goes From Here
+
+On its own, PQ is compression, not a search structure — searching PQ codes still means scanning every stored vector. Production systems pair it with a coarse partitioning index so you only scan a fraction of the codes. That pairing is IVF-PQ, the workhorse of billion-scale search (it's what FAISS is famous for). **Module 3E (optional)** builds IVF and then combines it with the PQ you just wrote — best taken now, while k-means is fresh in your head.
+
 ## Checkpoint Questions
 - If d=768 and m=96, how many subvectors? What dimension is each?
 - Why asymmetric distance (query is not quantized) vs. symmetric (both quantized)?

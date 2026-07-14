@@ -47,7 +47,9 @@ Before implementing the full LSH index, it helps to *see* what random hyperplane
 If you'd rather skip this and move on to implementation, ask your instructor to generate the visualization code for you. The goal is understanding, not matplotlib skills.
 
 ## Deliverable
-Implement an LSH index using random hyperplane projections. Measure recall@10 as you vary the number of hash tables and hash bits.
+Implement an LSH index using random hyperplane projections. Measure recall@10 (defined in Module 3A) as you vary the number of hash tables and hash bits.
+
+**Grading:** your instructor writes and runs a test suite against this deliverable — it must pass, along with all previous modules' suites (see `OVERVIEW.md` → Verification and Grading).
 
 ## Checkpoint Questions
 - Why does increasing the number of hash functions decrease recall but increase precision?

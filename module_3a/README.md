@@ -26,6 +26,8 @@ A **KD-Tree** (k-dimensional tree) applies binary tree thinking to multi-dimensi
 
 In low dimensions (2D, 3D), this is powerful — you might visit only 10-20 nodes out of thousands. But as dimensions increase, something goes wrong. Discovering *what* and *why* is the real lesson of this module. KD-Trees are historically important but fail in high dimensions, and understanding that failure motivates everything that comes after (LSH, PQ, HNSW).
 
+**Measuring success — recall@k.** From this module on, every index you build gets judged against brute force. Brute force is exact, so its top-k results are the **ground truth**. Run the same query both ways and compare: **recall@k = (how many of the true top-k your index returned) / k**. If brute force says the 10 nearest neighbors are these, and your KD-Tree returns 8 of them, recall@10 = 0.8. A recall of 1.0 means your index found exactly what brute force found — just (hopefully) faster. You'll compute this metric in every remaining module, so build the habit now: benchmark = ground truth from brute force + recall + speed, never speed alone.
+
 **Scaffolding for this module:**
 1. Build a basic binary tree (if you haven't before) — Node class, recursive insert, display
 2. Extend to KDNode with split dimensions — understand how 2D/3D space gets partitioned
@@ -52,7 +54,9 @@ Then pick a query point, highlight its leaf region, and show which other regions
 If you'd rather skip the visualization, ask your instructor to generate the plot for you.
 
 ## Deliverable
-Implement a KD-Tree index. Run search on 3-dim, 100-dim, and 768-dim data. Compare recall and speed against brute force.
+Implement a KD-Tree index. Run search on 3-dim, 100-dim, and 768-dim data. Compare recall@10 and speed against brute force.
+
+**Grading:** your instructor writes and runs a test suite against this deliverable — it must pass, along with all previous modules' suites (see `OVERVIEW.md` → Verification and Grading).
 
 ## Implementation Notes
 - **Build step uses `sorted()` instead of median selection.** This is a pedagogical simplification — sorting at each recursive level gives O(n log² n) build time instead of O(n log n) with linear-time median selection (e.g., `np.partition`). Standard KD-Tree implementations use the faster approach. Keep this in mind when analyzing build-time complexity or comparing benchmarks against reference implementations.

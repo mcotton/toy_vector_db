@@ -17,8 +17,9 @@ This is a learning project to build a vector database from scratch in Python. Th
 ```
 Module 0 (Foundations) ──mandatory──▶ Module 1 (Brute Force) ──mandatory──▶
 Module 2 (Storage) ──▶ Module 3A (KD-Tree) ──▶ Module 3B (LSH) ──▶
-Module 3C (PQ) ──▶ Module 3D (HNSW) ──▶ Module 4 (Filtering) ──▶
-Module 5 (Interface) ──▶ Module 6 (Embeddings) ──▶ Module 7 (Benchmarks)
+Module 3C (PQ) ──▶ Module 3E (IVF, optional) ──▶ Module 3D (HNSW) ──▶
+Module 4 (Filtering) ──▶ Module 5 (Interface) ──▶ Module 6 (Embeddings) ──▶
+Module 7 (Benchmarks) ──▶ Module 8 (Advanced, optional)
 ```
 
 ## Modules
@@ -31,6 +32,7 @@ Module 5 (Interface) ──▶ Module 6 (Embeddings) ──▶ Module 7 (Benchma
 | 3A | `module_3a/` | Indexing — KD-Trees |
 | 3B | `module_3b/` | Indexing — Locality-Sensitive Hashing (LSH) |
 | 3C | `module_3c/` | Indexing — Product Quantization (PQ) |
+| 3E | `module_3e/` | Indexing — IVF (Inverted File) — Optional |
 | 3D | `module_3d/` | Indexing — HNSW |
 | 4 | `module_4/` | Filtering and Metadata |
 | 5 | `module_5/` | Interface Design |
@@ -59,10 +61,13 @@ Between each module there is an optional deep-dive that bridges concepts and pro
 1. Introduce the module's core concepts and ask questions to gauge understanding
 2. Learner explains back — instructor challenges gaps
 3. Learner writes the code — instructor reviews, critiques, and asks "why did you do it this way?"
-4. Checkpoint: learner must pass the questions before moving on
-5. If they can't pass, we go back. No moving forward with gaps.
+4. Grading: instructor writes and runs a test suite against the deliverable (see below)
+5. Checkpoint: learner must pass the questions before moving on
+6. If they can't pass, we go back. No moving forward with gaps.
 
-## Verification
-- Unit tests for correctness at each module
+## Verification and Grading
+- **The learner writes the code; the instructor writes the tests.** At the end of each module, the instructor (Claude) generates a grading test suite against the learner's deliverable and runs it. Failures are reviewed Socratically — the learner explains and fixes them — before the module is marked complete.
+- **Grading suites accumulate.** The current module's code must pass its own suite *and* every previous module's suite. This is the regression net: when code is copied forward or refactored between modules, old bugs and reintroduced ones get caught immediately.
+- Grading test files live on the learner's personal branch (e.g. `module_N/test_module_N.py`) — they target learner-specific code and never belong on main.
 - Benchmark comparisons to prove indexes help (or expose when they don't)
 - Final integration test: real embeddings, real queries, measured recall
